@@ -10,7 +10,6 @@ const api = axios.create({
   },
 });
 
-// Request interceptor to add JWT token
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
@@ -24,7 +23,6 @@ api.interceptors.request.use(
   }
 );
 
-// Response interceptor to handle token expiration
 api.interceptors.response.use(
   (response) => response,
   (error) => {
@@ -37,7 +35,6 @@ api.interceptors.response.use(
   }
 );
 
-// Auth APIs
 export const authAPI = {
   register: (data) => api.post('/register', data),
   login: (data) => api.post('/login', data),
@@ -56,19 +53,17 @@ export const authAPI = {
 };
 
 // Farmer APIs
-// Farmer APIs
 export const farmerAPI = {
   getAll: () => api.get('/farmers'),
   getById: (id) => api.get(`/farmers/${id}`),
 
-  // Now expects a FormData directly
   create: (formData) =>
     api.post('/farmers', formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
     }),
 
   update: (id, formData) => {
-    formData.append('_method', 'POST'); // Laravel-style method spoofing
+    formData.append('_method', 'POST');
     return api.post(`/farmers/${id}`, formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
     });

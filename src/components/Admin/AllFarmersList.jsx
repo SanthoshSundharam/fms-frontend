@@ -1,4 +1,3 @@
-// src/components/Admin/AllFarmersList.jsx
 import React, { useState } from 'react';
 import {
   Table,
@@ -151,11 +150,7 @@ const AllFarmersList = ({ farmers, users, loading }) => {
               <TableRow key={farmer.id} hover>
                 <TableCell>
                   <Avatar
-                    src={
-                      farmer.farmer_image
-                        ? `${process.env.REACT_APP_API_URL?.replace('/api', '')}/storage/${farmer.farmer_image}`
-                        : undefined
-                    }
+                    src={farmer.farmer_image_url || undefined}
                     alt={farmer.name}
                   >
                     {farmer.name.charAt(0)}
